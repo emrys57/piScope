@@ -10,9 +10,14 @@
     <script>
       let time0;
       const canvas = document.getElementById('myChart');
-      const smoothie = new SmoothieChart({millisPerPixel: 200, minValue: 0, maxValue: 3000, grid: {fillStyle: 'transparent', millisPerLine: 10000}, tooltipLine: {strokeStyle: '#bbbbbb'}});
+      const smoothie = new SmoothieChart({millisPerPixel: 400, 
+        minValue: 0, maxValue: 3000, 
+        grid: {fillStyle: 'transparent', millisPerLine: 20000}, 
+        tooltipLine: {strokeStyle: '#bbbbbb'},
+        labels:{fillStyle:'#000000'}
+      });
       const line1 = new TimeSeries();
-      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.6)', lineWidth: 4});
+      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 0, 255, 1)', /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
 
       smoothie.streamTo(canvas, 1000);
 
@@ -23,7 +28,7 @@
           time0 = time;
         }
         const time1 = time - time0;
-        line1.append(time1, Number(reading));
+        line1.append(time, Number(reading));
         console.log(`time1: ${time1}, reading: ${reading}`);
       };
     </script>
