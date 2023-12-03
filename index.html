@@ -5,7 +5,7 @@
     <!-- Include Chart.js or any other charting library -->
     <script type="text/javascript" src="./node_modules/smoothie/smoothie.js"></script>
   </head>
-  <body>
+  <body style="background-color: lightgray">
     <canvas id="myChart" width="1000" height="300"></canvas>
     <script>
       let time0;
@@ -23,7 +23,7 @@
           time0 = time;
         }
         const time1 = time - time0;
-        line1.append(time1, reading);
+        line1.append(time1, Number(reading));
         console.log(`time1: ${time1}, reading: ${reading}`);
       };
     </script>
