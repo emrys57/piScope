@@ -9,14 +9,16 @@
     <canvas id="myChart"></canvas>
     <script>
       var smoothie = new SmoothieChart();
-      smoothie.streamTo(document.getElementById('myChart'));
       const line1 = new TimeSeries();
       smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 1});
 
+      smoothie.streamTo(document.getElementById('myChart'));
+
       const ws = new WebSocket('ws://localhost:8080');
       ws.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        line1.append(data.time, data.value);
+        const {time, reading} = JSON.parse(event.data);
+        line1.append(time, reading);
+        console.log(`time: ${time}, reading: ${reading}`);
       };
     </script>
   </body>
