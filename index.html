@@ -8,6 +8,7 @@
   <body>
     <canvas id="myChart"></canvas>
     <script>
+      let time0;
       const canvas = document.getElementById('myChart');
       const smoothie = new SmoothieChart();
       const line1 = new TimeSeries();
@@ -18,8 +19,12 @@
       const ws = new WebSocket('ws://localhost:8080');
       ws.onmessage = function (event) {
         const {time, reading} = JSON.parse(event.data);
-        line1.append(time, reading);
-        console.log(`time: ${time}, reading: ${reading}`);
+        if (!time0) {
+          time0 = time;
+        }
+        const time1 = time - time0;
+        line1.append(time1, reading);
+        console.log(`time1: ${time1}, reading: ${reading}`);
       };
     </script>
   </body>
