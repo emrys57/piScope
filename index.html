@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Real-Time Data</title>
+    <!-- Include Chart.js or any other charting library -->
+    <script type="text/javascript" src="smoothie.js"></script>
+  </head>
+  <body>
+    <canvas id="myChart"></canvas>
+    <script>
+      var smoothie = new SmoothieChart();
+      smoothie.streamTo(document.getElementById('myChart'));
+      const line1 = new TimeSeries();
+      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 1});
+
+      const ws = new WebSocket('ws://localhost:8080');
+      ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        line1.append(data.time, data.value);
+      };
+    </script>
+  </body>
+</html>

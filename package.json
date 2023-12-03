@@ -1,0 +1,22 @@
+{
+  "name": "piscope",
+  "version": "1.0.0",
+  "description": "Chart recorder website for raspberry pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emrys57/piScope.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emrys57/piScope/issues"
+  },
+  "homepage": "https://github.com/emrys57/piScope#readme",
+  "dependencies": {
+    "smoothie": "^1.36.1"
+  }
+}
