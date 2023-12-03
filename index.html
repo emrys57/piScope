@@ -8,11 +8,12 @@
   <body>
     <canvas id="myChart"></canvas>
     <script>
-      var smoothie = new SmoothieChart();
+      const canvas = document.getElementById('myChart');
+      const smoothie = new SmoothieChart();
       const line1 = new TimeSeries();
-      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 1});
+      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)' /* fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth:4*/});
 
-      smoothie.streamTo(document.getElementById('myChart'));
+      smoothie.streamTo(canvas, 500);
 
       const ws = new WebSocket('ws://localhost:8080');
       ws.onmessage = function (event) {
