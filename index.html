@@ -10,9 +10,9 @@
     <script>
       let time0;
       const canvas = document.getElementById('myChart');
-      const smoothie = new SmoothieChart({minValue: 0, maxValue: 3000, grid: {fillStyle: 'transparent'}, tooltipLine: {strokeStyle: '#bbbbbb'}});
+      const smoothie = new SmoothieChart({millisPerPixel: 200, minValue: 0, maxValue: 3000, grid: {fillStyle: 'transparent'}, tooltipLine: {strokeStyle: '#bbbbbb'}});
       const line1 = new TimeSeries();
-      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)' /* fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth:4*/});
+      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.6)', lineWidth: 4});
 
       smoothie.streamTo(canvas, 1000);
 
