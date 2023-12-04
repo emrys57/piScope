@@ -25,9 +25,16 @@
         lines.push(new TimeSeries());
         smoothie.addTimeSeries(lines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
       }
+      let ignoreBundle = false;
       smoothie.streamTo(canvas, 1000);
+
       const connectWebSocket = () => {
         const ws = new WebSocket('ws://localhost:8080');
+
+        ws.onopen = (event) => {
+          console.log(`Connected to WebSocket. event:${JSON.stringify(event)} sessionID:${sessionId}`);
+        };
+
         ws.onmessage = function (event) {
           const data = JSON.parse(event.data);
           if (Array.isArray(data)) {
@@ -46,6 +53,7 @@
           // It is not an array, so it is a single reading. Print the reading too.
           addReading(data, true);
         };
+
         ws.onclose = (event) => {
           // If the socket drops - it happens - we just reopen it.
           // When it reopens, the server will send a bundle of data to get the chart up to date.
@@ -61,12 +69,13 @@
             setTimeout(connectWebSocket, 5000); // Try to reconnect every 5 seconds.
           }
         };
+
         const addReading = (data, print = false) => {
           if (!data?.time) {
             console.log('no time in data', data);
             return;
           }
-          const {channel, time, reading} = data;
+          const {channel = 0, time, reading} = data;
           if (channel >= numberOfLines) {
             console.log(`channel ${channel} is out of range`);
             return;
@@ -77,6 +86,7 @@
           }
         };
       };
+
       connectWebSocket();
     </script>
   </body>
