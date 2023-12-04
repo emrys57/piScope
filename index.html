@@ -18,20 +18,63 @@
         tooltipLine: {strokeStyle: '#bbbbbb'},
         labels: {fillStyle: '#000000'},
       });
-      const line1 = new TimeSeries();
-      smoothie.addTimeSeries(line1, {strokeStyle: 'rgba(0, 0, 255, 1)', /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
-
+      const lines = [];
+      const numberOfLines = 2;
+      const colors = ['rgba(0, 0, 255, 1)', 'rgba(255, 0, 0, 1)'];
+      for (let i = 0; i < numberOfLines; i++) {
+        lines.push(new TimeSeries());
+        smoothie.addTimeSeries(lines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
+      }
       smoothie.streamTo(canvas, 1000);
 
       const ws = new WebSocket('ws://localhost:8080');
       ws.onmessage = function (event) {
-        const {time, reading} = JSON.parse(event.data);
-        if (!time0) {
-          time0 = time;
+        const data = JSON.parse(event.data);
+        if (Array.isArray(data)) {
+          // This is a bundle of data to get the chart up to date.
+          // We ignore it if we already have data.
+          if (ignoreBundle) {
+            ignoreBundle = false;
+            return;
+          }
+          // We don't have data, so we use this bundle to get the chart up to date.
+          data.forEach((d) => {
+            addReading(d);
+          });
+          return;
         }
-        const time1 = time - time0;
-        line1.append(time, Number(reading));
-        console.log(`time1: ${time1}, reading: ${reading}`);
+        // It is not an array, so it is a single reading. Print the reading too.
+        addReading(data, true);
+      };
+      ws.onclose = (event) => {
+        // If the socket drops - it happens - we just reopen it.
+        // When it reopens, the server will send a bundle of data to get the chart up to date.
+        // But we already have that data, so we just ignore it.
+        ignoreBundle = true;
+        if (event.wasClean) {
+          console.log(`Closed cleanly, code=${event.code}, reason=${event.reason}`);
+          connectWebSocket();
+        } else {
+          // Connection was not closed cleanly, maybe server process crashed or network issues.
+          // We can try to reconnect here.
+          console.log('WebSocket connection closed unexpectedly. Attempting to reconnect...');
+          setTimeout(connectWebSocket, 5000); // Try to reconnect every 5 seconds.
+        }
+      };
+      const addReading = (data, print = false) => {
+        if (!data?.time) {
+          console.log('no time in data', data);
+          return;
+        }
+        const {channel, time, reading} = data;
+        if (channel >= numberOfLines) {
+          console.log(`channel ${channel} is out of range`);
+          return;
+        }
+        lines[channel].append(time, Number(reading));
+        if (print) {
+          console.log(`channel:${channel} time: ${time}, reading: ${reading}`);
+        }
       };
     </script>
   </body>
