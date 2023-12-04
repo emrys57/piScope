@@ -60,21 +60,22 @@
           console.log('WebSocket connection closed unexpectedly. Attempting to reconnect...');
           setTimeout(connectWebSocket, 5000); // Try to reconnect every 5 seconds.
         }
-      };
-      const addReading = (data, print = false) => {
-        if (!data?.time) {
-          console.log('no time in data', data);
-          return;
-        }
-        const {channel, time, reading} = data;
-        if (channel >= numberOfLines) {
-          console.log(`channel ${channel} is out of range`);
-          return;
-        }
-        lines[channel].append(time, Number(reading));
-        if (print) {
-          console.log(`channel:${channel} time: ${time}, reading: ${reading}`);
-        }
+
+        const addReading = (data, print = false) => {
+          if (!data?.time) {
+            console.log('no time in data', data);
+            return;
+          }
+          const {channel, time, reading} = data;
+          if (channel >= numberOfLines) {
+            console.log(`channel ${channel} is out of range`);
+            return;
+          }
+          lines[channel].append(time, Number(reading));
+          if (print) {
+            console.log(`channel:${channel} time: ${time}, reading: ${reading}`);
+          }
+        };
       };
     </script>
   </body>
