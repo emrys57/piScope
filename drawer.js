@@ -1,15 +1,6 @@
 // Purpose: This file contains the code for the drawer.
 // Separated out to a js file so eslint checks it.
 
-// smoothie.js includes these statements:
-
-// exports.TimeSeries = TimeSeries;
-// exports.SmoothieChart = SmoothieChart;
-
-// I used to include that file like this:
-// <script type="text/javascript" src="./node_modules/smoothie/smoothie.js"></script>
-
-// How do I import those classes instead?
 import {SmoothieChart, TimeSeries} from './node_modules/smoothie/smoothie.js';
 const canvas = document.getElementById('myChart');
 const smoothie = new SmoothieChart({
