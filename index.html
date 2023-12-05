@@ -18,6 +18,8 @@
         tooltipLine: {strokeStyle: '#bbbbbb'},
         labels: {fillStyle: '#000000'},
       });
+      const loadBundle = true; // When we first start we want to load all the
+      // data from the server to get the chart up to date.
       const lines = [];
       const numberOfLines = 2;
       const colors = ['rgba(0, 0, 255, 1)', 'rgba(255, 0, 0, 1)'];
@@ -50,15 +52,15 @@
             });
             return;
           }
+          loadBundle = false;
+          // Once we start receiving individual data, we don't want to load the bundle again.
+          // The bundle will be resent by the server if the connection drops.
           // It is not an array, so it is a single reading. Print the reading too.
           addReading(data, true);
         };
 
         ws.onclose = (event) => {
           // If the socket drops - it happens - we just reopen it.
-          // When it reopens, the server will send a bundle of data to get the chart up to date.
-          // But we already have that data, so we just ignore it.
-          ignoreBundle = true;
           if (event.wasClean) {
             console.log(`Closed cleanly, code=${event.code}, reason=${event.reason}`);
             connectWebSocket();
