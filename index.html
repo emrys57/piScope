@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>Real-Time Data</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.36.1/smoothie.min.js"></script>
   </head>
   <body style="background-color: lightgray">
     <canvas id="myChart" width="1200" height="450"></canvas>
-    <script type="module">
-      import {SmoothieChart, TimeSeries} from './node_modules/smoothie/smoothie.js';
+    <script type="text/javascript">
       const canvas = document.getElementById('myChart');
       const smoothie = new SmoothieChart({
         millisPerPixel: 400,
