@@ -14,12 +14,12 @@ const smoothie = new SmoothieChart({
 });
 let loadBundle = true; // When we first start we want to load all the
 // data from the server to get the chart up to date.
-const errorOffset = -1000;
 const errorScale = 1;
 
 const addError = ({channel, time, error}) => {
-  errorLines[channel].append(time, error * errorScale + errorOffset);
+  errorLines[channel].append(time, error * errorScale + errorOffset(channel));
 };
+const errorOffset = (channel) => -500 - channel * 1000;
 
 const fitters = []; // the straigth line fitters for each channel.
 const lines = [];
