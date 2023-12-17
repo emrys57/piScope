@@ -1,7 +1,7 @@
 // Purpose: This file contains the code for the drawer.
 // Separated out to a js file so eslint checks it.
 
-import {SmoothieChart, TimeSeries} from 'smoothie';
+import {SmoothieChart, TimeSeries} from './node_modules/smoothie/smoothie.js';
 import {Fitter} from './fitter.js';
 const canvas = document.getElementById('myChart');
 const smoothie = new SmoothieChart({
