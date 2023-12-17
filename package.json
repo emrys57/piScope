@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/emrys57/piScope#readme",
   "dependencies": {
+    "regression": "^2.0.1",
     "smoothie": "^1.36.1"
   }
 }
