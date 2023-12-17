@@ -15,7 +15,7 @@ const smoothie = new SmoothieChart({
 let loadBundle = true; // When we first start we want to load all the
 // data from the server to get the chart up to date.
 const errorOffset = -1000;
-const errorScale = 10;
+const errorScale = 1;
 
 const addError = ({channel, time, error}) => {
   errorLines[channel].append(time, error * errorScale + errorOffset);

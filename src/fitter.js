@@ -55,16 +55,23 @@ class Fitter {
       throw new Error('Not enough data to fit a line');
     }
 
+    // Bizarrely, the regression library sets the gradient to 0, because it is small.
+    // Attempt a workaraound.
+    const time0 = data[0][0];
+    const data2 = data.map(([time, reading]) => [time - time0, reading]);
     // Use the linear regression function from the regression library.
-    const result = regression.linear(data);
+    const result = regression.linear(data2, {precision: 10});
     const [a, b] = result.equation;
+    console.log(`a=${a}, b=${b}`);
+    console.log(`fit:${result.string}`);
 
     // Calculate and report the error for each data point.
-    data.forEach(([time, reading]) => {
+    data2.forEach(([time, reading]) => {
       const expectedReading = a * time + b;
       const error = reading - expectedReading;
       if (this.addError) {
-        this.addError({channel: this.channel, time, error});
+        console.log(`channel:${this.channel} time:${time + time0}, reading:${reading}, expected:${expectedReading}, error:${error}`);
+        this.addError({channel: this.channel, time: time + time0, error});
       } else {
         // Handle the case where addError is not provided or is not a function.
         throw new Error('addError function is not defined or is not a function');
