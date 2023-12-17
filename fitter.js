@@ -4,7 +4,7 @@
 // Each channel is treated independently.
 // This fits both +ve and -ve slopes.
 
-import regression from 'regression';
+import regression from './node_modules/regression/src/regression.js';
 
 class Fitter {
   constructor(options) {
