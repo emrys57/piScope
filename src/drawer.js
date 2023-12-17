@@ -8,14 +8,14 @@ const smoothie = new SmoothieChart({
   millisPerPixel: 400,
   minValue: -2000, // to allow for error channels, where an error of 0 displays as -1000
   maxValue: 3500,
-  grid: {fillStyle: '#f5f7e9', strokeStyle: 'rgba(150,150,150,0.3)', millisPerLine: 60000, verticalSections: 6, lineWidth: 1},
+  grid: {fillStyle: '#f5f7e9', strokeStyle: 'rgba(150,150,150,0.3)', millisPerLine: 60000, verticalSections: 11, lineWidth: 1},
   tooltipLine: {strokeStyle: '#bbbbbb'},
   labels: {fillStyle: '#000000'},
 });
 let loadBundle = true; // When we first start we want to load all the
 // data from the server to get the chart up to date.
 const errorOffset = -1000;
-const errorScale = 100;
+const errorScale = 10;
 
 const addError = ({channel, time, error}) => {
   errorLines[channel].append(time, error * errorScale + errorOffset);
