@@ -5,7 +5,7 @@ module.exports = {
   mode: 'development',
 
   // Entry file where Webpack starts bundling.
-  entry: './src/index.js', // Update with your entry file.
+  entry: './src/index.mjs', // Update with your entry file.
 
   // Output configuration for the bundle.
   output: {
