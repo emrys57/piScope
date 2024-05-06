@@ -8,7 +8,7 @@ const smoothie = new SmoothieChart({
   millisPerPixel: 400,
   minValue: -2000, // to allow for error channels, where an error of 0 displays as -1000
   maxValue: 3500,
-  grid: {fillStyle: '#f5f7e9', strokeStyle: 'rgba(150,150,150,0.3)', millisPerLine: 60000, verticalSections: 11, lineWidth: 1},
+  grid: {fillStyle: '#f5f7e9', strokeStyle: 'rgba(150,150,150,0.3)', millisPerLine: 20000, verticalSections: 7, lineWidth: 1},
   tooltipLine: {strokeStyle: '#bbbbbb'},
   labels: {fillStyle: '#000000'},
 });
@@ -31,7 +31,7 @@ for (let i = 0; i < numberOfLines; i++) {
   errorLines[i] = new TimeSeries();
   fitters[i] = new Fitter({channel: i, addError});
   smoothie.addTimeSeries(lines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
-  smoothie.addTimeSeries(errorLines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
+  // smoothie.addTimeSeries(errorLines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
 }
 smoothie.streamTo(canvas, 1000);
 
