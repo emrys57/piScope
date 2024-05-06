@@ -18,7 +18,7 @@ const errorScale = 10;
 
 const addError = ({channel, time, error}) => {
   if (error === null) {
-    errorLines[channel].append(time, null); // try to persuade smoothie not to plot.
+    errorLines[channel].append(time, -2500); // try to persuade smoothie not to plot.
     return;
   }
   errorLines[channel].append(time, error * errorScale + errorOffset(channel));
