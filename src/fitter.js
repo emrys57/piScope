@@ -28,6 +28,8 @@ class Fitter {
     // Check if the reading is within the limits to be added to data.
     if (reading <= this.limitHigh && reading >= this.limitLow) {
       this.data.push([time, reading]);
+    } else {
+      this.data.push([time, null]); // null makes smoothie skip plotting.
     }
 
     // Determine whether to trigger the line fitting process.
@@ -67,6 +69,10 @@ class Fitter {
 
     // Calculate and report the error for each data point.
     data2.forEach(([time, reading]) => {
+      if (reading === null) {
+        this.addError({channel: this.channel, time: time + time0, error: null});
+        return;
+      }
       const expectedReading = a * time + b;
       const error = reading - expectedReading;
       if (this.addError) {
