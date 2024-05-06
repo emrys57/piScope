@@ -21,17 +21,17 @@ const addError = ({channel, time, error}) => {
 };
 const errorOffset = (channel) => -500 - channel * 1000;
 
-const fitters = []; // the straigth line fitters for each channel.
+const fitters = []; // the straight line fitters for each channel.
 const lines = [];
 const errorLines = [];
 const numberOfLines = 2;
 const colors = ['rgba(0, 0, 255, 1)', 'rgba(255, 0, 0, 1)'];
 for (let i = 0; i < numberOfLines; i++) {
   lines[i] = new TimeSeries();
-  // errorLines[i] = new TimeSeries();
-  // fitters[i] = new Fitter({channel: i, addError});
+  errorLines[i] = new TimeSeries();
+  fitters[i] = new Fitter({channel: i, addError});
   smoothie.addTimeSeries(lines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
-  // smoothie.addTimeSeries(errorLines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
+  smoothie.addTimeSeries(errorLines[i], {strokeStyle: colors[i], /*fillStyle: 'rgba(0, 255, 0, 0.6)',*/ lineWidth: 1});
 }
 smoothie.streamTo(canvas, 1000);
 
@@ -82,7 +82,7 @@ const connectWebSocket = () => {
       return;
     }
     lines[channel].append(time, Number(reading));
-    // fitters[channel].fitLineIfTrigger(data);
+    fitters[channel].fitLineIfTrigger(data);
     if (print) {
       console.log(`channel:${channel} time: ${time}, reading: ${reading}`);
     }
