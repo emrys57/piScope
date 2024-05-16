@@ -61,6 +61,7 @@ class Fitter {
     // Attempt a workaraound.
     const time0 = data[0][0];
     const data2 = data.map(([time, reading]) => [time - time0, reading]);
+    // eslint-disable-next-line no-unused-vars
     const data3 = data2.filter(([time, reading]) => reading !== null); // Remove null readings.
     // Use the linear regression function from the regression library.
     const result = regression.linear(data3, {precision: 10});
